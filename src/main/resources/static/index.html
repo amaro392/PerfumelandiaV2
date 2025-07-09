@@ -3,82 +3,453 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Perfumelandia - Inicio</title>
+  <title>Perfumelandia - Tienda Online</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #e74c3c;
+      --accent-color: #3498db;
+      --light-bg: #f8f9fa;
+      --text-dark: #2c3e50;
+      --border-color: #dee2e6;
+    }
+
     body {
-      background-color: #f2f2f2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
     }
-    .card {
-      transition: transform 0.2s;
+
+    /* Header */
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 1rem 0;
     }
-    .card:hover {
-      transform: scale(1.03);
+
+    .navbar-brand {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color) !important;
+      text-decoration: none;
+    }
+
+    .navbar-brand i {
+      color: var(--secondary-color);
+      margin-right: 0.5rem;
+    }
+
+    .navbar-nav .nav-link {
+      color: var(--text-dark) !important;
+      font-weight: 500;
+      margin: 0 0.5rem;
+      padding: 0.5rem 1rem !important;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+      background-color: var(--light-bg);
+      color: var(--secondary-color) !important;
+    }
+
+    .btn-cart {
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-cart:hover {
+      background-color: #c0392b;
+      color: white;
+      text-decoration: none;
+    }
+
+    /* Main Content */
+    .main-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: white;
+      padding: 3rem 0;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .main-header h1 {
+      font-size: 2.5rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .main-header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    /* Product Cards */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--border-color);
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      background-color: #f8f9fa;
+    }
+
+    .product-info {
+      padding: 1.5rem;
+    }
+
+    .product-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .product-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+    }
+
+    .stock-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background-color: #e9ecef;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      color: #6c757d;
+    }
+
+    .stock-badge.in-stock {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .stock-badge.low-stock {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    .btn-add-cart {
+      width: 100%;
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 5px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-add-cart:hover {
+      background-color: #c0392b;
+    }
+
+    .btn-add-cart:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-header h1 {
+        font-size: 2rem;
+      }
+      
+      .product-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .navbar-collapse {
+        margin-top: 1rem;
+      }
+    }
+
+    /* Success Message */
+    .alert-success {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      min-width: 300px;
+      display: none;
+    }
+
+    .user-menu {
+      display: none;
+    }
+
+    .user-menu.active {
+      display: block;
     }
   </style>
 </head>
 <body>
-
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand" href="index.html">🧴 Perfumelandia</a>
-      <div class="d-flex">
-        <a id="btn-login" href="login.html" class="btn btn-outline-light me-2">Iniciar Sesión</a>
-        <a id="btn-register" href="registro.html" class="btn btn-outline-light me-2">Registrarse</a>
-        <a id="btn-carrito" href="carrito.html" class="btn btn-outline-light me-2">🛒 Carrito</a>
-        <a id="btn-problema" href="Reporte.html" class="btn btn-outline-light me-2">❓ Tengo un Problema</a>
-        <a id="btn-problema" href="Noti.html" class="btn btn-outline-light me-2">🔔</a>
-
-        <button id="btn-logout" onclick="" class="btn btn-danger me-2 d-none">Cerrar sesión</button>
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-spray-can"></i>
+        Perfumelandia
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="fas fa-home"></i> Inicio
+            </a>
+          </li>
+          <li class="nav-item" id="login-item">
+            <a class="nav-link" href="login.html">
+              <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+            </a>
+          </li>
+          <li class="nav-item" id="register-item">
+            <a class="nav-link" href="registro.html">
+              <i class="fas fa-user-plus"></i> Registrarse
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Reporte.html">
+              <i class="fas fa-headset"></i> Ayuda
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Noti.html">
+              <i class="fas fa-bell"></i> Notificaciones
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="btn-cart" href="carrito.html">
+              <i class="fas fa-shopping-cart"></i>
+              Carrito (<span id="cart-count">0</span>)
+            </a>
+          </li>
+          <li class="nav-item user-menu">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <i class="fas fa-user"></i> <span id="username"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="perfil.html">Mi Perfil</a></li>
+                <li><a class="dropdown-item" href="pedidos.html">Mis Pedidos</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" onclick="logout()">Cerrar Sesión</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
 
-  <div class="container py-5">
-    <h2 class="text-center mb-4">Catálogo de Productos</h2>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-      <div class="col">
-        <div class="card h-100">
-          <img src="https://www.lodoro.cl/cdn/shop/products/1VSSAMBEROMANCE250.png" class="card-img-top" alt="Perfume Amber Romance" style="height: 200px; object-fit: cover;">
-          <div class="card-body text-center">
-            <h5 class="card-title">Perfume Ocean</h5>
-            <p class="card-text">$18.990</p>
-            <p class="card-text">Stock: <span class="stock" data-id="1">Cargando...</span></p>
-            <button class="btn btn-primary" onclick="agregarAlCarrito(1)">Agregar al carrito</button>
-          </div>
-        </div>
-      </div>
+  <!-- Header -->
+  <div class="main-header">
+    <div class="container">
+      <h1>Descubre tu fragancia perfecta</h1>
+      <p>Los mejores perfumes y fragancias al mejor precio</p>
+    </div>
+  </div>
 
-      
-      <div class="col">
-        <div class="card h-100">
-          <img src="https://www.lodoro.cl/cdn/shop/products/1VSSAMBEROMANCE250.png" class="card-img-top" alt="Perfume Amber Romance" style="height: 200px; object-fit: cover;">
-          <div class="card-body text-center">
-            <h5 class="card-title">Perfume Sunset</h5>
-            <p class="card-text">$22.500</p>
-            <p class="card-text">Stock: <span class="stock" data-id="2">Cargando...</span></p>
-            <button class="btn btn-primary" onclick="agregarAlCarrito(2)">Agregar al carrito</button>
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2 class="mb-4">Nuestros Productos</h2>
+        
+        <div class="product-grid">
+          <!-- Producto 1 -->
+          <div class="product-card">
+            <img src="https://www.lodoro.cl/cdn/shop/products/1VSSAMBEROMANCE250.png" 
+                 class="product-image" 
+                 alt="Perfume Amber Romance">
+            <div class="product-info">
+              <h3 class="product-title">Perfume Amber Romance</h3>
+              <div class="product-price">$18.990</div>
+              <span class="stock-badge in-stock" id="stock-1">
+                <i class="fas fa-check-circle"></i> En stock (15 unidades)
+              </span>
+              <button class="btn-add-cart" onclick="addToCart(1, 'Perfume Amber Romance', 18990)">
+                <i class="fas fa-cart-plus"></i> Agregar al carrito
+              </button>
+            </div>
           </div>
-        </div>
-      </div>
-      
-      
-      <div class="col">
-        <div class="card h-100">
-          <img src="https://www.lodoro.cl/cdn/shop/products/1VSSAMBEROMANCE250.png" class="card-img-top" alt="Perfume Amber Romance" style="height: 200px; object-fit: cover;">
-          <div class="card-body text-center">
-            <h5 class="card-title">Perfume Midnight</h5>
-            <p class="card-text">$24.990</p>
-            <p class="card-text">Stock: <span class="stock" data-id="3">Cargando...</span></p>
-            <button class="btn btn-primary" onclick="agregarAlCarrito(3)">Agregar al carrito</button>
+
+          <!-- Producto 2 -->
+          <div class="product-card">
+            <img src="https://www.lodoro.cl/cdn/shop/products/mindnightsplash.jpg?v=1749926488&width=1000" 
+                 class="product-image" 
+                 alt="Perfume Midnight Bloom">
+            <div class="product-info">
+              <h3 class="product-title">Perfume Midnight Bloom</h3>
+              <div class="product-price">$22.500</div>
+              <span class="stock-badge low-stock" id="stock-2">
+                <i class="fas fa-exclamation-triangle"></i> Pocas unidades (8 disponibles)
+              </span>
+              <button class="btn-add-cart" onclick="addToCart(2, 'Perfume Midnight Bloom', 22500)">
+                <i class="fas fa-cart-plus"></i> Agregar al carrito
+              </button>
+            </div>
+          </div>
+
+          <!-- Producto 3 -->
+          <div class="product-card">
+            <img src="https://www.lodoro.cl/cdn/shop/products/1VSSPURESEDUC250.png?v=1749927363&width=1200" 
+                 class="product-image" 
+                 alt="Perfume Pure Solution">
+            <div class="product-info">
+              <h3 class="product-title">Perfume Pure Solution</h3>
+              <div class="product-price">$24.990</div>
+              <span class="stock-badge in-stock" id="stock-3">
+                <i class="fas fa-check-circle"></i> En stock (23 unidades)
+              </span>
+              <button class="btn-add-cart" onclick="addToCart(3, 'Perfume Pure Solution', 24990)">
+                <i class="fas fa-cart-plus"></i> Agregar al carrito
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
-  <script src="js/app_in.js"></script>
-  <script src="js/app_stock.js"></script>
-  <script src="js/app_carrito.js"></script>
+
+  <!-- Success Alert -->
+  <div class="alert alert-success alert-dismissible fade" role="alert" id="success-alert">
+    <i class="fas fa-check-circle"></i>
+    <span id="success-message">Producto agregado al carrito exitosamente</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Perfulandia. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Carrito de compras
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+    
+    // Actualizar contador del carrito
+    function updateCartCount() {
+      document.getElementById('cart-count').textContent = cartCount;
+    }
+    
+    // Agregar producto al carrito
+    function addToCart(id, name, price) {
+      const existingItem = cart.find(item => item.id === id);
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          id: id,
+          name: name,
+          price: price,
+          quantity: 1
+        });
+      }
+      
+      cartCount++;
+      updateCartCount();
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      // Mostrar mensaje de éxito
+      showSuccessMessage(`${name} agregado al carrito`);
+    }
+    
+    // Mostrar mensaje de éxito
+    function showSuccessMessage(message) {
+      const alert = document.getElementById('success-alert');
+      const messageElement = document.getElementById('success-message');
+      
+      messageElement.textContent = message;
+      alert.classList.add('show');
+      
+      setTimeout(() => {
+        alert.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Verificar si el usuario está logueado
+    function checkLoginStatus() {
+      const user = localStorage.getItem('currentUser');
+      if (user) {
+        const userData = JSON.parse(user);
+        document.getElementById('username').textContent = userData.nombre || userData.email;
+        document.getElementById('login-item').style.display = 'none';
+        document.getElementById('register-item').style.display = 'none';
+        document.querySelector('.user-menu').classList.add('active');
+      }
+    }
+    
+    // Cerrar sesión
+    function logout() {
+      localStorage.removeItem('currentUser');
+      location.reload();
+    }
+    
+    // Inicializar página
+    document.addEventListener('DOMContentLoaded', function() {
+      updateCartCount();
+      checkLoginStatus();
+    });
+  </script>
 </body>
 </html>
