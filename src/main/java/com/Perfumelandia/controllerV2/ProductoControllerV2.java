@@ -19,13 +19,13 @@ import org.springframework.hateoas.MediaTypes;
 import java.util.stream.Collectors;
 import java.util.List;
 
-
-
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/v2/productos")
-@CrossOrigin(origins = "*", allowedHeaders = "*") // AGREGADO: Configuración CORS
+@RequestMapping("/api/v2/productos") 
+@Tag(name="Productos",
+    description="Operaciones de los productos")
 public class ProductoControllerV2 {
 
     @Autowired
@@ -46,11 +46,14 @@ public class ProductoControllerV2 {
 
     @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public CollectionModel<EntityModel<Producto>> obtenerProductos() {
-        
-        if (!datosCargados && productoServ.getProducto().isEmpty()) {
-            productoServ.saveProducto(new Producto(null, "Perfume Ocean", "Marca A", 10, 18990));
-            productoServ.saveProducto(new Producto(null, "Perfume Sunset", "Marca B", 7, 22500));
-            productoServ.saveProducto(new Producto(null, "Perfume Midnight", "Marca C", 5, 24990));
+                if (!datosCargados && productoServ.getProducto().isEmpty()) {
+            productoServ.saveProducto(new Producto(null, "Perfume Ocean", "Marca A", 10, 18990
+              ));
+            productoServ.saveProducto(new Producto(null, "Perfume Sunset", "Marca B", 7, 22500
+              ));
+            productoServ.saveProducto(new Producto(null, "Perfume Midnight", "Marca C", 5, 24990
+              ));
+
             datosCargados = true;
         }
         
@@ -63,22 +66,25 @@ public class ProductoControllerV2 {
             .obtenerProductos()).withSelfRel());
     }
 
-    // CORREGIDO: Cambio el tipo de retorno para ser consistente
-    @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
-    public ResponseEntity<EntityModel<Producto>> obtenerProductoPorId(@PathVariable Long id) {
-        Producto producto = productoServ.getProductoId(id);
-        if (producto != null) {
-            return ResponseEntity.ok(assembler.toModel(producto));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @Operation(summary="Obtener Producto",
+                description="Obtiene un producto segun su id")
+    @GetMapping("/{id}")
+    public Producto obtenerProductoPorId(@PathVariable Long id) {
+        return productoServ.getProductoId(id);
     }
 
+
+    @Operation(hidden = true)
     @GetMapping("/{id}/actualizar")
     public ResponseEntity<Void> getActualizarProductoLink(@PathVariable Long id) {
         return ResponseEntity.ok().build();
     }
 
+
+
+
+    @Operation(summary="Eliminar Producto",
+                description="Elimina un producto segun su id")    
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarProducto(@PathVariable Long id) {
         String resultado = productoServ.deleteProducto(id);

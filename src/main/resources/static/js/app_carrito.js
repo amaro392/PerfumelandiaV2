@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 const API_URL = "http://192.168.2.103:8080/api/v1/carrito";
 
+=======
+const API_URL = "http://192.168.1.9:8080/api/v2/carrito";
+>>>>>>> a4e62d2bd43a462d5020d9369e354138e2ad1c3f
 
 function agregarAlCarrito (id) {
   fetch(`${API_URL}/agregar/${id}`, { method: "POST" })
@@ -16,7 +20,11 @@ async function eliminarDelCarrito(id) {
   try{
     const response = await fetch (`${API_URL}/eliminar/${id}`, {method: "DELETE"});
     alert("Producto Eliminado");
+<<<<<<< HEAD
       fetch("http://192.168.2.103:8080/api/v1/notificaciones/agregar", {
+=======
+      fetch("http://192.168.1.9:8080/api/v2/notificaciones/agregar", {
+>>>>>>> a4e62d2bd43a462d5020d9369e354138e2ad1c3f
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -40,7 +48,11 @@ function vaciarCarrito() {
 }
 
 function confirmarCompra() {
+<<<<<<< HEAD
   fetch("http://192.168.2.103:8080/api/v1/carrito/confirmar", {
+=======
+  fetch("http://192.168.1.9:8080/api/v2/carrito/confirmar", {
+>>>>>>> a4e62d2bd43a462d5020d9369e354138e2ad1c3f
     method: "POST",
     headers: { "Content-Type": "application/json" },
   })
@@ -50,7 +62,11 @@ function confirmarCompra() {
     fetch(`${API_URL}`)
       .then(res => res.json())
         console.log("Compra echa")
+<<<<<<< HEAD
           fetch("http://192.168.2.103:8080/api/v1/notificaciones/agregar", {
+=======
+          fetch("http://192.168.1.9:8080/api/v2/notificaciones/agregar", {
+>>>>>>> a4e62d2bd43a462d5020d9369e354138e2ad1c3f
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -63,7 +79,11 @@ function confirmarCompra() {
 }
 
 function cargarCarrito() {
+<<<<<<< HEAD
       fetch("http://192.168.2.103:8080/api/v1/carrito")
+=======
+      fetch("http://192.168.1.9:8080/api/v2/carrito")
+>>>>>>> a4e62d2bd43a462d5020d9369e354138e2ad1c3f
         .then(res => res.json())
         .then(data => {
           const tbody = document.querySelector("#tablaCarrito tbody");
@@ -91,5 +111,4 @@ function cargarCarrito() {
         });
 }
 
-cargarCarrito();
-window.onload = cargarCarrito;
+window.onload = cargarCarrito();
