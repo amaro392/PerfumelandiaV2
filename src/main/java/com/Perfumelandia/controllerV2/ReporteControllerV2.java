@@ -13,12 +13,12 @@ import org.springframework.hateoas.MediaTypes;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+
+
 
 @RestController
 @RequestMapping("/api/v2/reportes")
-@Tag(name = "Reportes", description = "Operaciones de los Reportes")
+
 public class ReporteControllerV2 {
 
     @Autowired
@@ -27,8 +27,7 @@ public class ReporteControllerV2 {
     @Autowired
     private ReporteModelAssembler assembler;
 
-    @Operation(summary = "Enviar Reportes",
-               description = "Crea el reporte y lo guarda en la BD")
+    
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Reporte>> enviarR(@RequestBody Reporte r) {
         Reporte creado = reporteServ.guardarReporte(r);
@@ -38,8 +37,7 @@ public class ReporteControllerV2 {
             .body(assembler.toModel(creado));
     }
 
-    @Operation(summary = "Ver Reporte",
-               description = "Devuelve un reporte por su ID")
+    
     @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public EntityModel<Reporte> verReporte(@PathVariable Long id) {
         Reporte reporte = reporteServ.obtenerReporte(id);
